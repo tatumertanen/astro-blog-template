@@ -2,7 +2,7 @@
 title: "My First Blog Post"
 description: "This is the description for my first blog post"
 publishDate: 2023-05-09
-author: "John Doe"
+author: author-1
 image: 
   url: "https://example.com/placeholder-image.jpg"
   alt: "A placeholder image for the blog post"
