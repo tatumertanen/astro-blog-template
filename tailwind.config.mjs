@@ -11,7 +11,7 @@ export default {
 			colors: {
 				base: { // Overall page background
 					light: '#ffffff',
-					dark: '#1a202c',
+					dark: '#ffffff',
 				},
 			},
 		},
