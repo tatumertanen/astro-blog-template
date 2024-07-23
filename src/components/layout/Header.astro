@@ -1,0 +1,66 @@
+---
+import { Icon } from "astro-icon/components";
+import Container from "@/components/core/Container.astro";
+import { nav } from "@/config";
+---
+
+<header>
+    <Container>
+        <div class="flex items-center justify-between py-4">
+            <a
+                href="/"
+                class="flex flex-shrink-0 items-center justify-center gap-4"
+            >
+                <!-- <span class="sr-only"></span> -->
+                <!-- <img class="h-8 w-8" src="/favicon.svg" alt="Logo" /> -->
+                <Icon name="logo" class="h-8 w-8" />
+                <h2 class="text-xl font-extrabold text-gray-900">Blogged</h2>
+            </a>
+            <button
+                type="button"
+                class="md:hidden p-2 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                aria-expanded="false"
+                id="mobile-menu-button"
+            >
+                <span class="sr-only">Open menu</span>
+                <Icon name="mdi:menu" class="h-6 w-6" />
+            </button>
+            <nav class="hidden md:flex gap-6">
+                {
+                    nav.map((item) => (
+                        <a
+                            href={item.path}
+                            class="py-4 px-3 font-bold text-md text-gray-800 hover:text-gray-900"
+                        >
+                            {item.name}
+                        </a>
+                    ))
+                }
+            </nav>
+        </div>
+    </Container>
+
+    <div class="hidden md:hidden" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 flex flex-col gap-2">
+            {
+                nav.map((item) => (
+                    <a
+                        href={item.path}
+                        class="font-semibold text-lg text-gray-800 hover:text-gray-900 hover:bg-gray-50 px-3 py-2 rounded-md"
+                    >
+                        {item.name}
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+</header>
+
+<script is:inline>
+    const mobileMenuButton = document.getElementById("mobile-menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    mobileMenuButton.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+    });
+</script>
