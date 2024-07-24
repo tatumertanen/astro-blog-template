@@ -1,0 +1,95 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import { Category, Tag } from "@/config";
+import type { CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+    const blogEntries = await getCollection("blog");
+
+    const categoryPaths = Object.values(Category).flatMap((category) =>
+        blogEntries
+            .filter((entry) => entry.data.category === category)
+            .map((entry) => ({
+                params: {
+                    list: "category",
+                    slug: category.replace(/\s+/g, "-").toLowerCase(),
+                },
+                props: {
+                    category,
+                },
+            })),
+    );
+
+    const tagPaths = Object.values(Tag).flatMap((tag) =>
+        blogEntries
+            .filter((entry) => entry.data.tags?.includes(tag))
+            .map((entry) => ({
+                params: {
+                    list: "tag",
+                    slug: tag.replace(/\s+/g, "-").toLowerCase(),
+                },
+                props: {
+                    tag,
+                },
+            })),
+    );
+
+    return [...categoryPaths, ...tagPaths];
+}
+
+interface Props {
+    category: Category;
+    tag: Tag;
+}
+
+const { category, tag } = Astro.props;
+
+const entries = await getCollection("blog");
+
+const title = category
+    ? `Posts in category: ${category}`
+    : `Posts tagged with: ${tag}`;
+const description = category
+    ? `Browse all blog posts in the category ${category}`
+    : `Explore all blog posts tagged with ${tag}`;
+---
+
+<Layout title={title} description={description}>
+    <div class="max-w-3xl mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold mb-8">{title}</h1>
+        <ul class="space-y-4">
+            {
+                entries.map((entry) => (
+                    <li class="border-b border-gray-200 dark:border-gray-700 pb-4">
+                        <a
+                            href={`/blog/${entry.slug}`}
+                            class="block hover:underline"
+                        >
+                            <h2 class="text-2xl font-semibold mb-2">
+                                {entry.data.title}
+                            </h2>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                {entry.data.description}
+                            </p>
+                            <div class="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                                <time
+                                    datetime={entry.data.publishDate.toISOString()}
+                                >
+                                    {entry.data.publishDate.toLocaleDateString(
+                                        "en-us",
+                                        {
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                        },
+                                    )}
+                                </time>
+                            </div>
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</Layout>

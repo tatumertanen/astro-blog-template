@@ -23,3 +23,5 @@ export const nav: Nav = [
         path: "/contact"
     }
 ]
+
+export * from "./frontmatter"

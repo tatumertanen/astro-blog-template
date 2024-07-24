@@ -6,7 +6,8 @@ author: author-1
 image: 
   url: "https://example.com/placeholder-image.jpg"
   alt: "A placeholder image for the blog post"
-tags: ["astro", "blogging", "learning in public"]
+tags: ["JavaScript"]
+category: "Programming"
 ---
 
 # My First Blog Post

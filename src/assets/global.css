@@ -1,5 +1,9 @@
-html {
-    font-family: "Inter", system-ui, sans-serif;
+:root {
+    --base: #fff;
+}
+
+.dark {
+    --base: #334;
 }
 
 code {

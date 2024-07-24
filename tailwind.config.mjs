@@ -1,11 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	darkMode: 'media',
+	darkMode: 'selector',
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ['Inter', 'sans-serif'],
+				sans: ['Noto Sans JP Variable', 'sans-serif'],
 				serif: ['Merriweather', 'serif'],
 			},
 			spacing: {
@@ -13,10 +13,11 @@ export default {
 				'9xl': '128rem',
 			},
 			colors: {
-				base: { // Overall page background
-					light: '#ffffff',
-					dark: '#ffffff',
-				},
+				// base: { // Overall page background
+				// 	light: '#ffffff',
+				// 	dark: '#ffffff',
+				// },
+				base: "var(--base)"
 			},
 		},
 	},

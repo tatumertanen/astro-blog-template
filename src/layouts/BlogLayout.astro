@@ -1,0 +1,45 @@
+---
+import Layout from "./Layout.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+    post: CollectionEntry<"blog">;
+    title?: string;
+    description?: string;
+}
+
+const { title, description, post } = Astro.props;
+const { publishDate, author, image } = post.data;
+const postTitle = post.data.title;
+const postDescription = post.data.description;
+
+const formattedPublishDate = publishDate.toLocaleDateString("en-us", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+});
+---
+
+<Layout title={title || postTitle} description={description || postDescription}>
+    <article class="max-w-3xl mx-auto px-4 py-8">
+        {
+            image && (
+                <img
+                    src={image.url}
+                    alt={image.alt}
+                    class="w-full h-auto rounded-lg mb-8"
+                />
+            )
+        }
+        <h1 class="text-4xl font-bold mb-4">{title}</h1>
+        <div class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+            <time datetime={publishDate.toISOString()}
+                >{formattedPublishDate}</time
+            >
+        </div>
+        {description && <p class="text-xl mb-8">{description}</p>}
+        <div class="prose dark:prose-invert max-w-none">
+            <slot />
+        </div>
+    </article>
+</Layout>
